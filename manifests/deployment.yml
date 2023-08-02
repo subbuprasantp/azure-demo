@@ -16,4 +16,4 @@ spec:
         - name: azuredemo 
           image: azuretrianing.azurecr.io/azuredemo
           ports:
-          - containerPort: 80
+          - containerPort: 8080
