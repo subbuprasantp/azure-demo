@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+exporters:
+  logging:
+
+  otlp:
+    endpoint: tempo-us-central1.grafana.net:443
+    headers:
+      authorization: Basic MjA3MjcxOmV5SnJJam9pTkdNeU9UZzBOalk1TnprMFlqbG1NR1UwWmpRME5HVmtaV0V3TTJOaFlqUmlaalEzTXpBMU1DSXNJbTRpT2lKemRXSmlkU0lzSW1sa0lqbzJORFEwTWpsOQ==    
+
+processors:
+  batch:
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging, otlp]

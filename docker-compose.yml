@@ -1,0 +1,19 @@
+version: "2"
+services:
+
+  # Collector
+  otel-collector:
+    image: otel/opentelemetry-collector:0.23.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "13133:13133" # health_check extension
+      - "4317:4317"        # OTLP gRPC receiver
+
+  demo-app:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    ports:
+      - "80:8080"
