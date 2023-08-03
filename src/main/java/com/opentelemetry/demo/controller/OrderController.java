@@ -18,7 +18,7 @@ public class OrderController {
 
     @GetMapping(value = "/v1/firstHello")
     public String getFirstHello() {
-        return "first hellooooooooooooooooooooooo";
+        return "test123";
     }
 
 }
