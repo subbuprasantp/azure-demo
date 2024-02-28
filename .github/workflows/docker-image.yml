@@ -3,7 +3,7 @@ name: Push to Azure Blob Storage
 on:
   push:
     branches:
-      - main
+      - main  # Trigger the workflow on push events to the main branch
 
 jobs:
   push_to_azure:
@@ -11,12 +11,13 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # Checkout the repository's code
+
+    - name: Install Azure CLI
+      uses: azure/setup-azure-cli@v1  # Install Azure CLI
 
     - name: Push files to Azure Blob Storage
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.72
-        inlineScript: |
-          pwd
-          az storage blob upload-batch --source /home/runner/work/azure-demo/azure-demo --destination test1 --account-name brimmastorage --sas-token ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
+      run: |
+        az storage blob upload-batch --source . --destination <container-name> --account-name <storage-account-name> --sas-token ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
+      env:
+        AZURE_STORAGE_SAS_TOKEN: ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}  # Pass SAS token as an environment variable
