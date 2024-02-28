@@ -18,4 +18,5 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
+          ls
           az storage blob upload-batch --source . --destination test1 --account-name brimmastorage --sas-token ${{ secrets.AZURE_STORAGE_SAS_TOKEN }}
